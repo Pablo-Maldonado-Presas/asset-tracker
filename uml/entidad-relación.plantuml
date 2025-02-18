@@ -1,0 +1,123 @@
+@startuml Entidad-Relación
+Title Diagrama Entidad-Relación
+
+hide circle
+skinparam linetype ortho
+
+entity "Usuario" {
+  * ID : int
+  * Nombre : string
+  * Email : string
+  * Contraseña : string
+  * RolID : int
+  * UbicacionID : int
+  * FechaRegistro : datetime
+}
+
+entity "Rol" {
+  * ID : int
+  * Nombre : string
+  * Permisos : string[] -- Lista de permisos
+}
+
+entity "LogActividad" {
+  * ID : int
+  * UsuarioID : int
+  * Fecha : datetime
+  * Acción : string
+}
+
+entity "Bodega" {
+  * ID : int
+  * Nombre : string
+  * Dirección : string
+  * Capacidad : string -- Volumen o peso máximo
+}
+
+entity "Ubicación" {
+  * ID : int
+  * Nombre : string
+  * BodegaID : int
+}
+
+entity "Pallet" {
+  * ID : int
+  * Código : string
+  * UbicacionID : int
+  * FechaModificación : datetime
+}
+
+entity "Carga" {
+  * ID : int
+  * PalletID : int
+}
+
+entity "Producto" {
+  * ID : int
+  * CargaID : int
+  * Nombre : string
+  * Cantidad : int
+}
+
+entity "EtiquetaRFID" {
+  * ID : int
+  * PalletID : int
+  * UbicacionID : int
+  * Código : string
+  * FechaÚltimaLectura : datetime
+  * Latitude : decimal
+  * Longitude : decimal
+}
+
+entity "DispositivoRFID" {
+  * ID : int
+  * UbicacionID : int
+  * Código : string
+  * Modelo : string
+  * Fabricante : string
+  * Frecuencia : decimal
+  * FechaRegistro : datetime
+  * EstadoOperativo : string
+}
+
+entity "SensorRFID" {
+  * ID : int
+  * RangoLectura : decimal
+  * ÚltimaLectura : datetime
+}
+
+entity "AntenaRFID" {
+  * ID : int
+  * Orientación : string
+  * PotenciaTransmisión : decimal
+  * FechaInstalación : datetime
+}
+
+entity "Estado" {
+  * ID : int
+  * Nombre : string
+}
+
+Rol         ||--o{ Usuario : "asignado a"
+Rol         ||--o{ LogActividad : "define acción"
+Usuario     ||--o{ LogActividad : "realiza"
+
+Usuario     ||--o{ EtiquetaRFID : "asocia a"
+
+Bodega      ||--o{ Ubicación : "contiene"
+Ubicación   ||--o{ Pallet : "contiene"
+Ubicación   ||--o{ EtiquetaRFID : "localiza"
+Ubicación   ||--o{ DispositivoRFID : "contiene"
+
+Pallet      ||--|| EtiquetaRFID : "asociado con"
+Pallet      ||--o{ Carga : "contiene"
+Carga       ||--o{ Producto : "tiene"
+
+EtiquetaRFID||--|| Estado : "tiene"
+DispositivoRFID ||--o{ SensorRFID : "hereda"
+DispositivoRFID ||--o{ AntenaRFID : "hereda"
+
+SensorRFID  ||--|| Estado : "tiene"
+AntenaRFID  ||--|| Estado : "tiene"
+AntenaRFID  ||--o{ SensorRFID : "monitorea"
+@enduml

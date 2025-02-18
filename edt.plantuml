@@ -1,0 +1,94 @@
+@startwbs EDT
+!theme materia
+* Proyecto
+** Inicio del proyecto
+*** Acta de Constitución
+*** Registro de interesados
+*** EDT
+
+** Análisis
+*** Objetivos
+**** Objetivo general
+**** Objetivos específicos
+*** Requerimientos
+**** Documento de requerimientos 
+**** Matriz de trazabilidad
+*** Planificación de riesgos
+**** Identificación de riesgos
+**** Evaluación y priorización
+**** Plan de mitigación
+
+** Diseño
+*** UML
+**** Diagrama físico
+**** Diagrama de casos de uso
+**** Diagrama de componentes
+*** Esquema de Bases de datos
+**** Pruebas y validación BD Relacional
+**** Pruebas y validación BD Documental
+*** Prototipo funcional
+
+** Desarrollo del sistema
+*** Backend
+**** Módulo de Autenticación
+**** Módulo de Gestión de usuarios y roles
+**** Módulo de Gestión de dispositivos RFID
+**** Módulo de Gestión de pallets
+**** Módulo de Trazabilidad
+**** Módulo de Registros de Transacciones
+**** Módulo de Lectura de Etiquetas RFID
+**** Módulo de Ayuda y Soporte
+**** Módulo de Perfil y Configuración de Cuenta
+*** API Web
+*** Frontend
+**** Interfaz de inicio de sesión
+**** Panel de Gestión de usuarios y roles
+**** Paneles CRUD
+**** Panel de Trazabilidad
+**** Panel de Registro de transacciones
+**** Paneles de Ayuda y Soporte
+**** Paneles de Perfil y Configuración de Cuenta
+*** Integración con dispositivos RFID
+**** Configuración de sensores y antenas
+**** Pruebas de conectividad y lectura
+*** Documentación técnica
+**** Manual de usuarios
+**** Guía de instalación y mantenimiento
+
+** Pruebas y Validación
+*** Pruebas unitarias
+**** Pruebas del Backend
+**** Pruebas del Frontend
+*** Pruebas de integración
+**** Integración entre módulos del sistema
+**** Integración con dispositivos RFID
+*** Pruebas de estrés y rendimiento
+*** Pruebas de Aceptación por el Usuario (UAT)
+*** Ajustes
+*** Validación de requerimientos
+**** Funcionales
+**** No funcionales
+
+** Implementación
+*** Instalación del sistema
+*** Configuración inicial (usuarios, permisos, dispositivos)
+*** Transición al entorno de producción
+**** Plan de respaldo
+
+** Soporte y Capacitación
+*** Capacitación a usuarios finales
+**** Talleres presenciales y virtuales
+**** Materiales de apoyo (manuales, videos, guías rápidas)
+**** Entrenamiento en sitio
+*** Soporte post-implementación
+**** Mesa de ayuda
+**** Actualizaciones periódicas
+**** Monitoreo y retroalimentación
+
+** Cierre del proyecto
+*** Evaluación del proyecto
+*** Recopilación de lecciones aprendidas
+*** Documentación final
+*** Aprobación formal del cliente
+*** Entrega de informe final
+@endwbs

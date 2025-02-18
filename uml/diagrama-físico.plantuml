@@ -1,0 +1,139 @@
+@startuml Diagrama_Físico
+title Diagrama Físico
+!theme materia-outline
+
+hide circle
+skinparam linetype ortho
+
+entity "Usuario" as usuario {
+  id: int <<PK>>
+  --
+  rol_id: int <<FK>>
+  ubicacion_id: int <<FK>>
+  nombre: varchar2(255)
+  email: varchar2(255) <<UNIQUE>>
+  contraseña: varchar2(255)
+  fecha_registro: datetime
+}
+
+entity "Rol" as rol {
+  id: int <<PK>>
+  --
+  nombre: varchar2(100)
+  permisos: text[] <<ARRAY>>
+}
+
+entity "LogActividad" as logactividad {
+  id: int <<PK>>
+  --
+  usuario_id: int <<FK>>
+  fecha: datetime
+  accion: varchar2(255)
+}
+
+entity "CentroDistribución" as centro_dist {
+  id: int <<PK>>
+  --
+  nombre: varchar2(255)
+  direccion: varchar2(255)
+}
+
+entity "CentroDistribución_Bodega" as centro_bodega {
+  centro_dist_id: <<PK>> <<FK>>
+  bodega_id: <<PK>> <<FK>>
+}
+
+entity "Bodega" as bodega {
+  id: int <<PK>>
+  --
+  nombre: varchar2(255)
+  direccion: varchar2(255)
+  capacidad: varchar2(20) -- Volumen o peso máximo
+}
+
+entity "Ubicación" as ubicacion {
+  id: int <<PK>>
+  --
+  nombre: varchar2(50)
+  bodega_id: int <<FK>>
+}
+
+entity "Pallet" as pallet {
+  id: int <<PK>>
+  --
+  codigo: varchar2(100) <<UNIQUE>>
+  ubicacion_id: int <<FK>>
+  fecha_modificacion: datetime
+}
+
+entity "Carga" as carga {
+  id: int <<PK>>
+  --
+  pallet_id: int <<FK>>
+}
+
+entity "Producto" as producto {
+  id: int <<PK>>
+  --
+  carga_id: int <<FK>>
+  nombre: varchar2(50)
+  cantidad: int
+}
+
+entity "EtiquetaRFID" as etiq_rfid {
+  id: int <<PK>>
+  --
+  ubicacion_id: int <<FK>>
+  pallet_id: int <<FK>>
+  fecha_ultima_lectura: datetime
+  latitude: decimal(10, 8) -- Coordenadas GPS
+  longitude: decimal(11, 8) -- Coordenadas GPS
+}
+
+entity "DispositivoRFID" as dispositivo_rfid {
+  id: int <<PK>>
+  --
+  codigo: varchar2(100) <<UNIQUE>>
+  ubicacion_id: int <<FK>>
+  modelo: varchar2(100)
+  fabricante: varchar2(100)
+  frecuencia: decimal(5, 2) -- KHz o MHZ
+  fecha_registro: datetime
+  estado_operativo: varchar2(50)
+}
+
+entity "SensorRFID" as sensor_rfid {
+  id: int <<PK>> <<FK>>
+  --
+  rango_lectura: decimal(5, 2) -- Metros 
+  ultima_lectura: datetime
+}
+
+entity "AntenaRFID" as antena_rfid {
+  id: int <<PK>> <<FK>>
+  --
+  orientacion: varchar2(50) -- Ejemplo: vertical, horizontal
+  potencia_transmision: decimal (5, 2) -- dBm
+  fecha_instalacion: datetime
+}
+
+rol         ||--o{ usuario: "asignado a"
+usuario     ||--o{ logactividad : "registra"
+bodega      ||--o{ usuario : "trabaja en"
+
+centro_dist ||-down-o{ centro_bodega : "distribuye a"
+bodega      ||--o{ centro_bodega : "recibe de"
+bodega      ||--o{ ubicacion : "contiene"
+ubicacion   ||--o{ pallet : "contiene"
+ubicacion   ||--o{ etiq_rfid : "contiene"
+
+ubicacion   ||--o{ dispositivo_rfid : "asignado a"
+dispositivo_rfid ||--o{ sensor_rfid : "hereda"
+dispositivo_rfid ||--o{ antena_rfid : "hereda"
+
+antena_rfid ||--o{ sensor_rfid : "monitorea"
+
+pallet      ||--|| etiq_rfid : "hereda"
+pallet      ||--|| carga : "tiene"
+carga       ||--o{ producto : "tiene"
+@enduml

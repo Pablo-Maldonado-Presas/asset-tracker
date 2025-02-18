@@ -1,0 +1,48 @@
+@startuml Gestión-Pallets
+!theme materia-outline
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+start
+:Administrador accede a la sección "Gestión de Pallets";
+
+:Seleccionar operación CRUD;
+
+if (¿Registrar Pallet?) then (Sí)
+  :Completar formulario con datos del pallet\n(Código, ubicación);
+  :Enviar datos al servidor;
+  if (¿Datos válidos?) then (Sí)
+    if (¿Pallet ya registrado?) then (Sí)
+      :Mostrar mensaje de error "Pallet ya registrado";
+    else (No)
+      :Registrar pallet en la base de datos;
+      :Mostrar mensaje "Pallet registrado con éxito";
+    endif
+  else (No)
+    :Mostrar mensaje de error "Datos inválidos";
+  endif
+else (No)
+  if (¿Editar Pallet?) then (Sí)
+    :Seleccionar pallet de la lista;
+    :Modificar datos del pallet\n(ubicación, estado);
+    :Enviar cambios al servidor;
+    if (¿Cambios válidos?) then (Sí)
+      :Actualizar datos en la base de datos;
+      :Mostrar mensaje "Pallet actualizado con éxito";
+    else (No)
+      :Mostrar mensaje de error "Cambios inválidos";
+    endif
+  else (No)
+    if (¿Eliminar Pallet?) then (Sí)
+      :Seleccionar pallet de la lista;
+      :Confirmar eliminación;
+      :Eliminar pallet de la base de datos;
+      :Mostrar mensaje "Pallet eliminado con éxito";
+    else (Consultar Pallets)
+      :Cargar y mostrar lista de pallets;
+      :Mostrar ID y Etiqueta y Ubicación asociados;
+    endif
+  endif
+endif
+stop
+@enduml

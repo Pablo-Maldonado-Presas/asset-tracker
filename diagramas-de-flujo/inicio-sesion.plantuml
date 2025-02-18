@@ -1,0 +1,29 @@
+@startuml Inicio-Sesión
+!theme materia-outline
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+start
+:Usuario ingresa usuario y contraseña;
+if (¿Olvidó su contraseña?) then (Sí)
+  :Usuario selecciona "Recuperar Contraseña";
+  :Solicitar email registrado;
+  :Enviar correo con enlace de recuperación;
+  stop
+else (No)
+  if (¿Campos vacíos?) then (Sí)
+    :Mostrar mensaje de error "Complete los campos";
+    stop
+  else (No)
+    :Enviar credenciales al servidor;
+    if (¿Credenciales válidas?) then (Sí)
+      :Obtener datos del usuario (rol, permisos);
+      :Redirigir al panel principal;
+      stop
+    else (No)
+      :Mostrar mensaje de error "Credenciales incorrectas";
+      stop
+    endif
+  endif
+endif
+@enduml

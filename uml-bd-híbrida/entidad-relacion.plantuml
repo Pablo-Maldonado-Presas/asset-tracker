@@ -1,0 +1,79 @@
+@startuml ER_Documental
+title Base de Datos Documental
+
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+' Colores personalizados para las entidades
+skinparam class {
+    BackgroundColor<<Config>> #D3D3D3
+    BackgroundColor<<Logs>> #90EE90
+    BackgroundColor<<Estado>> #FFA07A
+    BackgroundColor<<Historial>> #ADD8E6
+    BackgroundColor<<Alertas>> #FF6347
+    BorderColor Black
+}
+
+entity "**ConfigDispositivo**" as config_dispositivo <<Config>> {
+  **_id**: string 
+  **type**: "config_dispositivo"
+  modelo: string
+  fabricante: string
+  frecuencia: decimal
+  estado_operativo: string
+  fecha_registro: datetime
+  ubicacion: {
+    bodega: string
+    ubicacion: string }
+}
+
+entity "**LogTransacciones**" as log_transacciones <<Logs>> {
+  **_id**: string 
+  **type**: "log_transacciones"
+  timestamp: datetime
+  dispositivo_id: string
+  evento: string
+  detalles: {
+    codigo_etiqueta: string
+    ubicacion: string
+    latitud: decimal
+    longitud: decimal }
+}
+
+entity "**EstadoDispositivo**" as estado_dispositivo <<Estado>> {
+  **_id**: string
+  **type**: "estado_dispositivo"
+  dispositivo_id: string 
+  estado: string
+  nivel_bateria: string
+  potencia_transmision: decimal
+  ultima_comunicacion: datetime
+}
+
+entity "**HistorialActualizaciones**" as historial_actualizaciones <<Historial>> {
+  **_id**: string 
+  **type**: "historial_actualizaciones"
+  dispositivo_id: string
+  actualizaciones: [{
+      timestamp: datetime
+      campo_actualizado: string
+      valor_anterior: string
+      nuevo_valor: string }]
+}
+
+entity "**AlertasDispositivo**" as alertas_dispositivo <<Alertas>> {
+  **_id**: string 
+  **type**: "alertas_dispositivo"
+  timestamp: datetime
+  dispositivo_id: string 
+  tipo_alerta: string
+  detalles: {
+    nivel_bateria: string
+    accion_recomendada: string }
+}
+
+config_dispositivo ||--o{ log_transacciones : "**genera**"
+config_dispositivo ||--o{ estado_dispositivo : "**tiene**"
+config_dispositivo ||--o{ historial_actualizaciones : "**actualiza**"
+config_dispositivo ||--o{ alertas_dispositivo : "**emite**"
+@enduml

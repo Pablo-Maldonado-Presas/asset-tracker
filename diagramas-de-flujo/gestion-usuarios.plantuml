@@ -1,0 +1,48 @@
+@startuml Gestión-Usuarios
+!theme materia-outline
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+start
+:Administrador accede al módulo "Gestión de Usuarios";
+
+:Seleccionar operación CRUD (Crear, Editar, Eliminar, Consultar);
+
+if (¿Crear Usuario?) then (Sí)
+  :Completar formulario con datos del usuario (nombre, email, bodega);
+  :Seleccionar un rol de la lista;
+  :Enviar datos al servidor;
+  if (¿Datos válidos?) then (Sí)
+    :Registrar usuario en la base de datos;
+    :Mostrar mensaje "Usuario creado con éxito";
+  else (No)
+    :Mostrar mensaje de error "Datos inválidos";
+  endif
+else (No)
+  if (¿Editar Usuario?) then (Sí)
+    :Seleccionar usuario de la lista;
+    :Modificar datos del usuario (nombre, bodega, etc.);
+    if (¿Cambiar rol?) then (Sí)
+      :Seleccionar nuevo rol de la lista;
+    endif
+    :Enviar cambios al servidor;
+    if (¿Cambios válidos?) then (Sí)
+      :Actualizar datos y/o rol del usuario en la base de datos;
+      :Mostrar mensaje "Usuario actualizado con éxito";
+    else (No)
+      :Mostrar mensaje de error "Cambios inválidos";
+    endif
+  else (No)
+    if (¿Eliminar Usuario?) then (Sí)
+      :Seleccionar usuario de la lista;
+      :Confirmar eliminación;
+      :Eliminar usuario de la base de datos;
+      :Mostrar mensaje "Usuario eliminado con éxito";
+    else (Consultar Usuarios)
+      :Cargar y mostrar lista de usuarios;
+      :Mostrar nombre, email, bodega y rol asignados;
+    endif
+  endif
+endif
+stop
+@enduml

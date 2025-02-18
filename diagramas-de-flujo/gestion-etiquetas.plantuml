@@ -1,0 +1,49 @@
+@startuml Gestión-Etiquetas
+!theme materia-outline
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+start
+:Administrador accede a la sección "Gestión Tags";
+
+:Seleccionar operación CRUD;
+
+if (¿Registrar Etiqueta?) then (Sí)
+  :Completar formulario con datos de la etiqueta\n(código, ubicación, estado);
+  :Asociar la etiqueta a un pallet o ubicación;
+  :Enviar datos al servidor;
+  if (¿Datos válidos?) then (Sí)
+    if (¿Etiqueta ya registrada?) then (Sí)
+      :Mostrar mensaje de error "Etiqueta ya registrada";
+    else (No)
+      :Registrar etiqueta en la base de datos;
+      :Mostrar mensaje "Etiqueta registrada con éxito";
+    endif
+  else (No)
+    :Mostrar mensaje de error "Datos inválidos";
+  endif
+else (No)
+  if (¿Editar Etiqueta?) then (Sí)
+    :Seleccionar etiqueta de la lista;
+    :Modificar datos de la etiqueta\n(código, ubicación, estado);
+    :Enviar cambios al servidor;
+    if (¿Cambios válidos?) then (Sí)
+      :Actualizar datos en la base de datos;
+      :Mostrar mensaje "Etiqueta actualizada con éxito";
+    else (No)
+      :Mostrar mensaje de error "Cambios inválidos";
+    endif
+  else (No)
+    if (¿Eliminar Etiqueta?) then (Sí)
+      :Seleccionar etiqueta de la lista;
+      :Confirmar eliminación;
+      :Eliminar etiqueta de la base de datos;
+      :Mostrar mensaje "Etiqueta eliminada con éxito";
+    else (Consultar Etiquetas)
+      :Cargar y mostrar lista de etiquetas;
+      :Mostrar código, ubicación, estado y pallet asociado;
+    endif
+  endif
+endif
+stop
+@enduml

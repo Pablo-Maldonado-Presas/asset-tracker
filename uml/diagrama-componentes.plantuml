@@ -1,0 +1,44 @@
+@startuml Diagrama_Componentes
+!theme materia-outline
+
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+database "<b>Base de datos \n (PostgreSQL)" as db
+
+frame "IoT" {
+    ' Backend RFID
+    package "Backend RFID" {
+        node "Node-RED" {
+            [<b>MQTT Broker \n (Mosquitto)] as mqtt
+        }
+        [Node-RED] <--> mqtt : <b><i>Publica y \n <b><i>suscribe mensajes
+        [Node-RED] -right- db : <b><i>Consultas y \n <b><i>actualizaciones 
+    }
+    ' Hardware RFID
+    node "Hardware RFID" {
+        [<b>Equipos RFID \n (Antenas y Sensores)] as equiposRFID
+        equiposRFID <--> [Node-RED] : <b><i>Captura y \n <b><i>configuración
+    }
+}
+
+' Backend de la Plataforma Web
+package "Backend Web" {
+    [<b>API Web \n (FastAPI)] as apiWeb
+    component "<b>ORM Web \n (SQLModel)" as orm
+    apiWeb <-left-> orm : <b><i>Lee, escribe y \n <b><i>actualiza datos
+    orm -- db : <b><i>Consultas y \n <b><i>actualizaciones
+}
+
+' Frontend Web
+cloud "Frontend Web" {
+    [<b>Interfaz Usuario \n (ReactJS) \n (Material-UI o Bootstrap)] as interfaz
+    interfaz <--> apiWeb : <b><i>Interacción \n <b><i>del usuario
+}
+
+' Exportacion y Logs
+cloud "Importación y \n exportación \n de datos" {
+    [<b>CSV/Excel] as datos
+    apiWeb <-down-> datos : <b><i>Exporta e \n <b><i>importa datos
+}
+@enduml
