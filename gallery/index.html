@@ -1,1 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de imágenes</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            text-align: center; 
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
+        .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 15px; 
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .gallery figure {
+            margin: 0;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery figure:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 10px; 
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .gallery figure:hover img {
+            box-shadow: 2px 2px 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .gallery figcaption { 
+            margin-top: 5px; 
+            font-size: 14px; 
+            color: #ddd;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .close:hover {
+            color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+    <h1>📸 Galería de imágenes de Asset Tracker</h1>
+    <div class="gallery">
+        <figure onclick="openLightbox('1-login.png')">
+            <img src="1-login.png" alt="Login">
+            <figcaption>Login</figcaption>
+        </figure>
+        <figure onclick="openLightbox('1-recuperar.png')">
+            <img src="1-recuperar.png" alt="Recuperar contraseña">
+            <figcaption>Recuperar contraseña</figcaption>
+        </figure>
+        <figure onclick="openLightbox('2-dashboard.png')">
+            <img src="2-dashboard.png" alt="Dashboard">
+            <figcaption>Dashboard</figcaption>
+        </figure>
+        <figure onclick="openLightbox('3-administracion.png')">
+            <img src="3-administracion.png" alt="Administración">
+            <figcaption>Administración</figcaption>
+        </figure>
+        <figure onclick="openLightbox('4-trazabilidad.png')">
+            <img src="4-trazabilidad.png" alt="Trazabilidad">
+            <figcaption>Trazabilidad</figcaption>
+        </figure>
+        <figure onclick="openLightbox('5-gestion-usuarios.png')">
+            <img src="5-gestion-usuarios.png" alt="Gestión de usuarios">
+            <figcaption>Gestión de usuarios</figcaption>
+        </figure>
+        <figure onclick="openLightbox('-6historial-transacciones.png')">
+            <img src="6-historial-transacciones.png" alt="Historial de transacciones">
+            <figcaption>Historial de transacciones</figcaption>
+        </figure>
+        <figure onclick="openLightbox('7-manual.png')">
+            <img src="7-manual.png" alt="Manual de usuario">
+            <figcaption>Manual de usuario</figcaption>
+        </figure>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Imagen en grande">
+    </div>
+
+    <script>
+        function openLightbox(imageSrc) {
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = imageSrc;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
