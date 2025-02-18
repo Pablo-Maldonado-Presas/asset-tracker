@@ -79,3 +79,7 @@ Acceder a la plataforma con la siguiente credencial:
 - Next.js (React.js)
 - Material UI
 - PlantUML (para diagramas)
+
+## 📸 Galería de capturas de Asset Tracker
+Para ver capturas de pantalla de la aplicación, visita la [galería de imágenes](https://pablo-maldonado-presas.github.io/asset-tracker/gallery/).
+
