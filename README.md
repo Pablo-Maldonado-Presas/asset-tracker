@@ -69,6 +69,11 @@ npm run dev
 Abrir un navegador y entrar a:
 http://localhost:3000
 
+### **LOGIN**
+Acceder a la plataforma con la siguiente credencial:
+- Usuario: admin
+- Contraseña: admin
+
 ---
 🛠️ **Tecnologías Utilizadas**
 - Next.js (React.js)
